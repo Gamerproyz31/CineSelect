@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trending - CineSelect</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white min-h-screen"> 
+
+  <!-- ✅ Navbar -->
+  <header class="backdrop-blur bg-black/40 sticky top-0 z-50 shadow-md">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+
+    <!-- Logo -->
+    <div class="text-2xl font-bold text-red-500">🎬 CineSelect</div>
+
+    
+    <button id="menuToggle" class="text-white text-3xl md:hidden focus:outline-none">
+      ☰
+    </button>
+
+    <!-- Desktop Layout -->
+    <div class="hidden md:flex flex-1 items-center justify-between">
+
+      <!-- Centered Nav Links -->
+      <nav class="flex space-x-6 ml-60">
+        <a href="index.html" class="hover:text-red-400 transition">Home</a>
+        <a href="trending.html" class="hover:text-red-400 transition">Trending</a>
+        <a href="new-releases.html" class="hover:text-red-400 transition">New Releases</a>
+        <a href="genres.html" class="hover:text-red-400 transition">Genres</a>
+      </nav>
+
+      <!-- Search + Welcome + Logout -->
+      <form onsubmit="return redirectToSearch(event)" class="flex items-center space-x-3">
+        <input id="searchInput" type="text" placeholder="Search movies or genres..."
+               class="px-3 py-1 rounded bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500" />
+        <span class="text-white">Welcome, <strong id="userWelcomeName" class="text-red-400"></strong>!</span>
+        <button onclick="handleLogout()" type="button"
+                class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm font-semibold transition">
+          Logout
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Mobile Dropdown Nav -->
+  <div id="mobileMenu" class="md:hidden hidden px-4 pb-4">
+    <nav class="flex flex-col gap-2">
+      <a href="index.html" class="block py-2 px-3 rounded bg-gray-800 hover:bg-gray-700">Home</a>
+      <a href="trending.html" class="block py-2 px-3 rounded bg-gray-800 hover:bg-gray-700">Trending</a>
+      <a href="new-releases.html" class="block py-2 px-3 rounded bg-gray-800 hover:bg-gray-700">New Releases</a>
+      <a href="genres.html" class="block py-2 px-3 rounded bg-gray-800 hover:bg-gray-700">Genres</a>
+      <!-- 📌 Added unique ID for mobile search input -->
+        <form onsubmit="return redirectToSearch(event)" class="flex flex-col gap-2 mt-2">
+          <input id="searchInputMobile" type="text" placeholder="Search movies or genres..."
+            class="px-3 py-1 rounded bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500" />
+          <span class="text-sm">Welcome, <strong id="userWelcomeNameMobile" class="text-red-400"></strong>!</span>
+          <button onclick="handleLogout()" type="button"
+            class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm font-semibold transition">
+            Logout
+          </button>
+        </form>
+      </nav>
+    </div>
+  </header>
+
+<script>
+  // Show logged in user's name from session key
+ // const currentUser = localStorage.getItem("cineCurrentUser");
+ // const welcomeEl = document.getElementById("userWelcomeName");
+ // if (currentUser && welcomeEl) {
+ //   welcomeEl.textContent = currentUser;
+ // }
+
+  //function handleLogout() {
+  //  const confirmLogout = confirm("Are you sure you want to log out?");
+  //  if (confirmLogout) {
+  //    localStorage.removeItem("cineCurrentUser"); // Only logging out, not deleting user
+  //    window.location.href = "login.html"; // Redirect to login
+ //   }
+ // }
+</script>
+
+<script>
+  // Display logged-in user
+  const userName = localStorage.getItem("cineUser");
+  if (userName) {
+    document.getElementById("userWelcomeName").textContent = userName;
+  }
+
+  // Logout Function
+  function handleLogout() {
+    const confirmLogout = confirm("Are you sure you want to logout?");
+    if (confirmLogout) {
+      localStorage.removeItem("cineCurrentUser");
+      localStorage.removeItem("cinePass"); // optional
+      window.location.href = "login.html"; // redirect to login page
+    }
+  }
+</script>
+
+
+  <!-- ✅ Trending Section -->
+  <section class="max-w-7xl mx-auto px-6 py-12">
+    <h2 class="text-3xl font-bold mb-8 text-red-400">🔥 Trending Movies</h2>
+    <div id="trendingMovieGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+      <!-- ✅ Dynamic Movie Cards -->
+      <a href="../movies/movie.html?id=minecraft-movie">
+        <div class="trending-movie-card bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-red-500/30 transition duration-300" data-title="A Minecraft Movie"> 
+          <div class="h-48 bg-gray-800 flex items-center justify-center">
+            <img src="https://th.bing.com/th/id/OIP.3CH6srJpC_jRqqzB94KelgHaHa?w=202&h=202&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3" alt="A Minecraft Movie Poster" class="h-full object-cover w-full" />
+          </div>
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-1 text-white">A Minecraft Movie</h3>
+            <p class="text-gray-400 text-sm">A star-studded cinematic adaptation of the beloved video game.</p>
+          </div>
+        </div>
+      </a>
+
+      <a href="../movies/movie.html?id=lilo-stitch">
+        <div class="trending-movie-card bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-red-500/30 transition duration-300" data-title="Lilo & Stitch">
+          <div class="h-48 bg-gray-800 flex items-center justify-center">
+            <img src="https://th.bing.com/th/id/OIP.cpxHJmT-xiHWkuc4iqOwYQHaFj?w=257&h=193&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3" alt="">
+          </div>
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-1 text-white">Lilo & Stitch</h3>
+            <p class="text-gray-400 text-sm">Disney's live-action remake with holiday acclaim.</p>
+          </div>
+        </div>
+      </a>
+
+      <a href="../movies/movie.html?id=captain-america-brave">
+        <div class="trending-movie-card bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-red-500/30 transition duration-300" data-title="Captain America: Brave New World">
+          <div class="h-48 bg-gray-800 flex items-center justify-center">
+            <img src="https://th.bing.com/th/id/OIP.YL4sTA2ay4qZxw2-gCshRwHaEo?w=245&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3" alt="">
+          </div>
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-1 text-white">Captain America: Brave New World</h3>
+            <p class="text-gray-400 text-sm">Anthony Mackie takes the shield in this saga.</p>
+          </div>
+        </div>
+      </a>
+
+      <a href="../movies/movie.html?id=thunderbolts">
+        <div class="trending-movie-card bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-red-500/30 transition duration-300" data-title="Thunderbolts">
+          <div class="h-48 bg-gray-800 flex items-center justify-center">
+            <img src="https://th.bing.com/th/id/OIP.d_qimU25Hn1S5RGw5F0nnQHaFj?w=199&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3" alt="">
+          </div>
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-1 text-white">Thunderbolts</h3>
+            <p class="text-gray-400 text-sm">A darker Marvel ensemble flick gaining momentum among fans</p>
+          </div>
+        </div>
+      </a>
+
+      <a href="../movies/movie.html?id=sinners">
+        <div class="trending-movie-card bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-red-500/30 transition duration-300" data-title="Sinners">
+          <div class="h-48 bg-gray-800 flex items-center justify-center">
+            <img src="https://th.bing.com/th/id/OIP.lq7vJ4M_E9fG0YF1WeSaPwHaLH?w=120&h=181&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3" alt="">
+          </div>
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-1 text-white">Sinners</h3>
+            <p class="text-gray-400 text-sm">A unique supernatural thriller by Ryan Coogler, praised for its powerful performances</p>
+          </div>
+        </div>
+      </a>
+
+      <a href="../movies/movie.html?id=m3gan-2">
+        <div class="trending-movie-card bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-red-500/30 transition duration-300" data-title="M3GAN 2.0">
+          <div class="h-48 bg-gray-800 flex items-center justify-center">
+            <img src="https://th.bing.com/th/id/OIP.6sUf9T72TZq8YxMlVXVXNwHaLH?w=115&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3" alt="">
+          </div>
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-1 text-white">M3GAN 2.0</h3>
+            <p class="text-gray-400 text-sm">Horror combined with AI themes—deepening our fears of smart tech</p>
+          </div>
+        </div>
+      </a>
+
+      <a href="../movies/movie.html?id=28-years-later">
+        <div class="trending-movie-card bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-red-500/30 transition duration-300" data-title="28 Years Later">
+          <div class="h-48 bg-gray-800 flex items-center justify-center">
+            <img src="https://th.bing.com/th/id/OIP.mWCpQSUfMM0GhtliqruT5wHaEK?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3" alt="">
+          </div>
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-1 text-white">28 Years Later</h3>
+            <p class="text-gray-400 text-sm">The long-awaited sequel in Danny Boyle's viral-apocalypse saga, earning critical praise</p>
+          </div>
+        </div>
+      </a>
+
+      <a href="../movies/movie.html?id=mi-final-reckoning">
+        <div class="trending-movie-card bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-red-500/30 transition duration-300" data-title="Mission: Impossible - The Final Reckoning">
+          <div class="h-48 bg-gray-800 flex items-center justify-center">
+            <img src="https://tse3.mm.bing.net/th/id/OIP.bJJXvJkBZxjOPuDHPLKCsgHaEK?rs=1&pid=ImgDetMain&o=7&rm=3" alt="">
+          </div>
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-1 text-white">Mission: Impossible - The Final Reckoning</h3>
+            <p class="text-gray-400 text-sm">Tom Cruise's eighth and likely final Ethan Hunt adventure—jaw-dropping stunts and a huge box-office haul</p>
+          </div>
+        </div>
+      </a>
+
+      <a href="../movies/movie.html?id=jurassic-world-rebirth">
+        <div class="trending-movie-card bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-red-500/30 transition duration-300" data-title="Jurassic World: Rebirth">
+          <div class="h-48 bg-gray-800 flex items-center justify-center">
+            <img src="https://th.bing.com/th/id/OIP.N1pYdYOZLq673rouCsBIuQHaC0?w=326&h=133&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3" alt="">
+          </div>
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-1 text-white">Jurassic World: Rebirth</h3>
+            <p class="text-gray-400 text-sm">Dino-mania returns with new thrills and impressive visuals debuting this summer</p>
+          </div>
+        </div>
+      </a>
+
+      <a href="../movies/movie.html?id=final-destination-bloodlines">
+        <div class="trending-movie-card bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-red-500/30 transition duration-300" data-title="Final Destination: Bloodlines">
+          <div class="h-48 bg-gray-800 flex items-center justify-center">
+            <img src="https://gamefa.com/wp-content/uploads/2025/01/Final-Destination-Bloodlines-768x432.jpg" alt="">
+          </div>
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-1 text-white">Final Destination: Bloodlines</h3>
+            <p class="text-gray-400 text-sm">Continuing the cult horror franchise with a solid box-office presence</p>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ✅ Welcome & Logout Script -->
+ 
+<script>
+  // Welcome Message
+  const currentUser = localStorage.getItem("cineCurrentUser");
+  if (currentUser) {
+    const nameDesktop = document.getElementById("userWelcomeName");
+    const nameMobile = document.getElementById("userWelcomeNameMobile");
+    if (nameDesktop) nameDesktop.textContent = currentUser;
+    if (nameMobile) nameMobile.textContent = currentUser;
+  }
+
+  // Logout Function
+  function handleLogout() {
+    if (confirm("Are you sure you want to logout?")) {
+      localStorage.removeItem("cineCurrentUser");
+      localStorage.removeItem("cinePass");
+      window.location.href = "login.html";
+    }
+  }
+
+  function redirectToSearch(event) {
+      event.preventDefault();
+      const inputDesktop = document.getElementById("searchInput")?.value.trim();
+      const inputMobile = document.getElementById("searchInputMobile")?.value.trim();
+      const input = inputDesktop || inputMobile;
+      if (input) {
+        window.location.href = `search.html?query=${encodeURIComponent(input)}`;
+      }
+      return false;
+    }
+
+    // Auto redirect for desktop search input
+    const searchInput = document.getElementById("searchInput");
+    let redirected = false;
+    if (searchInput) {
+      searchInput.addEventListener("input", () => {
+        const value = searchInput.value.trim();
+        if (value.length >= 2 && !redirected) {
+          redirected = true;
+          window.location.href = `search.html?query=${encodeURIComponent(value)}`;
+        }
+      });
+    }
+
+    // 📌 Auto redirect for mobile search input
+    const searchInputMobile = document.getElementById("searchInputMobile");
+    let redirectedMobile = false;
+    if (searchInputMobile) {
+      searchInputMobile.addEventListener("input", () => {
+        const value = searchInputMobile.value.trim();
+        if (value.length >= 2 && !redirectedMobile) {
+          redirectedMobile = true;
+          window.location.href = `search.html?query=${encodeURIComponent(value)}`;
+        }
+      });
+    }
+  // Mobile Menu Toggle
+  const menuToggle = document.getElementById("menuToggle");
+  const mobileMenu = document.getElementById("mobileMenu");
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+  }
+</script>
